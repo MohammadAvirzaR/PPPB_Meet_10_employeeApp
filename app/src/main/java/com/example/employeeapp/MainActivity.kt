@@ -27,6 +27,12 @@ class MainActivity : AppCompatActivity() {
 
         // 🔹 Panggil API saat Activity dimulai
         getAllEmployee()
+        binding.btnCreate.setOnClickListener {
+            val intent = Intent(this, CreateUpdateEmployeeActivity::class.java)
+            intent.putExtra("IS_UPDATE", false)
+            startActivity(intent)
+        }
+
     }
 
     private fun getAllEmployee() {
@@ -72,13 +78,15 @@ class MainActivity : AppCompatActivity() {
                 binding.lvEmployee.adapter = listAdapter
 
                 binding.lvEmployee.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
-                    val intent = Intent(this@MainActivity, DetailEmployeeActivity::class.java)
+                    val intent = Intent(this@MainActivity, CreateUpdateEmployeeActivity::class.java)
 
                     val id = employees[position].id
                     intent.putExtra("EXTRA_ID", id)
+                    intent.putExtra("IS_UPDATE", true)
 
                     startActivity(intent)
                 }
+
             }
 
             override fun onFailure(call: Call<EmployeeResponse?>, t: Throwable) {
@@ -88,6 +96,8 @@ class MainActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+
         })
     }
+
 }

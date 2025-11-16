@@ -69,6 +69,18 @@ class DetailEmployeeActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+
         })
+        apiClient.deleteEmployee(id).enqueue(object : Callback<DeleteResponse> {
+            override fun onResponse(call: Call<DeleteResponse>, response: Response<DeleteResponse>) {
+                Toast.makeText(this@DetailEmployeeActivity, "Berhasil dihapus", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+
+            override fun onFailure(call: Call<DeleteResponse>, t: Throwable) {
+                Toast.makeText(this@DetailEmployeeActivity, "Gagal hapus", Toast.LENGTH_SHORT).show()
+            }
+        })
+
     }
 }
